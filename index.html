@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lauretta Ogbebor, Data Analytics Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EBE7DC;
+    --paper-deep:#E0DBCC;
+    --ink:#1D1C18;
+    --ink-soft:#4A473E;
+    --deep:#212C34;
+    --rust:#A6512B;
+    --teal:#2F6F63;
+    --rule:#C6BEA9;
+    --measure: 62ch;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Fraunces', serif;
+    font-size:17px;
+    line-height:1.6;
+  }
+  .sans{ font-family:'Inter', sans-serif; }
+  .codebit{ font-family:'Inter', sans-serif; font-weight:600; font-size:0.92em; }
+  a{color:var(--rust);}
+  a:focus-visible, button:focus-visible, summary:focus-visible{outline:2px solid var(--teal); outline-offset:3px;}
+  img{max-width:100%; display:block;}
+
+  header.masthead{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:22px 6vw;
+    border-bottom:1px solid var(--rule);
+    position:sticky;
+    top:0;
+    background:var(--paper);
+    z-index:20;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .masthead-name{
+    font-family:'Fraunces', serif;
+    font-size:17px;
+    font-weight:500;
+    letter-spacing:0.01em;
+  }
+  nav.masthead-nav{
+    font-family:'Inter', sans-serif;
+    font-size:14px;
+    display:flex;
+    gap:26px;
+  }
+  nav.masthead-nav a{
+    color:var(--ink);
+    text-decoration:none;
+    border-bottom:1px solid transparent;
+  }
+  nav.masthead-nav a:hover{ border-bottom:1px solid var(--rust); color:var(--rust);}
+
+  .hero{
+    padding:14vw 6vw 8vw;
+    max-width:1200px;
+  }
+  .hero h1{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:clamp(2.4rem, 6vw, 4.4rem);
+    line-height:1.05;
+    margin:0 0 28px;
+    max-width:16ch;
+    letter-spacing:-0.01em;
+  }
+  .hero p.sub{
+    font-family:'Inter', sans-serif;
+    max-width:52ch;
+    font-size:1.1rem;
+    color:var(--ink-soft);
+    margin:0 0 44px;
+  }
+  .ticker{
+    font-family:'Inter', sans-serif;
+    font-size:14px;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    border-top:1px solid var(--ink);
+    padding-top:16px;
+    max-width:760px;
+  }
+  .ticker span{ display:inline-flex; align-items:center; }
+  .ticker span:not(:last-child)::after{
+    content:"\2022";
+    margin:0 16px;
+    color:var(--rust);
+    font-size:10px;
+  }
+
+  section{
+    padding:5vw 6vw;
+    border-bottom:1px solid var(--rule);
+  }
+  section.about{ max-width:760px; }
+  section.about h2{ font-weight:500; font-size:1.9rem; margin:0 0 26px; }
+  section.about p{ max-width:var(--measure); color:var(--ink-soft); margin:0 0 18px; }
+  section.about strong{ color:var(--ink); font-weight:600;}
+
+  .dispatch{ padding:6vw 6vw; border-bottom:1px solid var(--rule); }
+  .dispatch.alt{ background:var(--paper-deep); }
+  .dispatch-head{ display:flex; align-items:baseline; gap:18px; margin-bottom:8px; }
+  .dispatch-num{
+    font-family:'Inter', sans-serif; font-weight:600; font-size:14px;
+    color:var(--rust); border:1px solid var(--rust); padding:2px 9px;
+    border-radius:2px; flex:none;
+  }
+  .dispatch-tool{
+    font-family:'Inter', sans-serif; font-weight:500; font-size:12px;
+    letter-spacing:0.03em; color:var(--ink-soft);
+  }
+  .dispatch h3{
+    font-family:'Fraunces', serif; font-weight:500;
+    font-size:clamp(1.5rem, 3vw, 2.1rem); margin:6px 0 34px; max-width:26ch;
+  }
+  .dispatch-grid{
+    display:grid; grid-template-columns: minmax(240px, 420px) 1fr;
+    gap:56px; align-items:start;
+  }
+  .dispatch-narrative{ font-family:'Inter', sans-serif; }
+  .dispatch-narrative p{ color:var(--ink-soft); max-width:var(--measure); margin:0 0 18px; font-size:0.99rem; }
+  .dispatch-narrative p:last-child{margin-bottom:0;}
+  .dispatch-narrative strong{color:var(--ink); font-weight:600;}
+  .figures{ display:flex; flex-direction:column; gap:26px; }
+  figure{ margin:0; border:1px solid var(--ink); background:#fff; }
+  figure img{ border-bottom:1px solid var(--ink); cursor:zoom-in; transition:opacity 0.15s ease; }
+  figure img:hover{ opacity:0.88; }
+
+  .lightbox-overlay{
+    position:fixed; inset:0; background:rgba(15,14,12,0.92);
+    display:none; align-items:center; justify-content:center;
+    z-index:200; padding:4vw; cursor:zoom-out;
+  }
+  .lightbox-overlay.open{ display:flex; }
+  .lightbox-overlay img{
+    max-width:100%; max-height:100%; border:1px solid var(--paper);
+    box-shadow:0 10px 40px rgba(0,0,0,0.5);
+  }
+  .lightbox-close{
+    position:fixed; top:22px; right:6vw; z-index:201;
+    font-family:'Inter', sans-serif; font-size:14px; color:var(--paper);
+    background:none; border:1px solid var(--paper); border-radius:2px;
+    padding:6px 14px; cursor:pointer; display:none;
+  }
+  .lightbox-close.open{ display:block; }
+  .lightbox-nav{
+    position:fixed; top:50%; transform:translateY(-50%);
+    z-index:201; font-family:'Inter', sans-serif; font-size:22px;
+    color:var(--paper); background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.4); border-radius:50%;
+    width:46px; height:46px; cursor:pointer; display:none;
+    align-items:center; justify-content:center;
+  }
+  .lightbox-nav.open{ display:flex; }
+  .lightbox-nav:hover{ background:rgba(255,255,255,0.18); }
+  .lightbox-prev{ left:4vw; }
+  .lightbox-next{ right:4vw; }
+  .lightbox-counter{
+    position:fixed; bottom:22px; left:50%; transform:translateX(-50%);
+    z-index:201; font-family:'Inter', sans-serif; font-size:12.5px;
+    color:var(--paper); opacity:0.8; display:none;
+  }
+  .lightbox-counter.open{ display:block; }
+  @media (max-width:700px){
+    .lightbox-nav{ width:40px; height:40px; font-size:18px; }
+    .lightbox-prev{ left:2vw; } .lightbox-next{ right:2vw; }
+  }
+  figcaption{
+    font-family:'Inter', sans-serif; font-size:12.5px; padding:9px 12px;
+    color:var(--ink-soft); display:flex; justify-content:space-between; gap:10px;
+  }
+  figcaption .tag{ color:var(--teal); flex:none; }
+  .figure-pair{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media (max-width: 860px){
+    .dispatch-grid{ grid-template-columns:1fr; gap:34px;}
+    .figure-pair{ grid-template-columns:1fr;}
+    nav.masthead-nav{ gap:16px; font-size:12.5px;}
+  }
+
+  section.skills{ padding:5vw 6vw; }
+  section.skills h2{ font-weight:500; font-size:1.6rem; margin:0 0 30px; }
+  .skill-rows{ display:flex; flex-direction:column; gap:16px; max-width:900px; font-family:'Inter', sans-serif; }
+  .skill-row{
+    display:grid; grid-template-columns:160px 1fr; gap:22px;
+    padding-bottom:16px; border-bottom:1px solid var(--rule); align-items:baseline;
+  }
+  .skill-row:last-child{border-bottom:none;}
+  .skill-cat{ font-weight:600; font-size:14px; color:var(--rust); }
+  .skill-list{ font-size:14px; color:var(--ink-soft); }
+  @media (max-width:600px){ .skill-row{grid-template-columns:1fr; gap:6px;} }
+
+  section.services{ padding:5vw 6vw; }
+  section.services h2{ font-weight:500; font-size:1.6rem; margin:0 0 12px; }
+  section.services > p.lead{ font-family:'Inter', sans-serif; color:var(--ink-soft); max-width:var(--measure); margin:0 0 34px; }
+  .service-rows{ display:flex; flex-direction:column; max-width:900px; font-family:'Inter', sans-serif; }
+  .service-row{ display:grid; grid-template-columns:220px 1fr; gap:22px; padding:18px 0; border-bottom:1px solid var(--rule); }
+  .service-row:first-child{ border-top:1px solid var(--rule); }
+  .service-name{ font-family:'Fraunces', serif; font-weight:500; font-size:1.05rem; color:var(--ink); }
+  .service-desc{ font-size:14px; color:var(--ink-soft); }
+  @media (max-width:600px){ .service-row{grid-template-columns:1fr; gap:6px;} }
+  .services-note{ font-family:'Inter', sans-serif; font-size:14px; color:var(--ink-soft); margin-top:22px; max-width:var(--measure); }
+
+  section.documentation{ padding:5vw 6vw; }
+  section.documentation h2{ font-weight:500; font-size:1.6rem; margin:0 0 12px; }
+  section.documentation > p.lead{ font-family:'Inter', sans-serif; color:var(--ink-soft); max-width:var(--measure); margin:0 0 34px; }
+  details{
+    border-top:1px solid var(--rule);
+    font-family:'Inter', sans-serif;
+  }
+  details:last-of-type{ border-bottom:1px solid var(--rule); }
+  summary{
+    cursor:pointer;
+    list-style:none;
+    padding:20px 4px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    font-family:'Fraunces', serif;
+    font-size:1.15rem;
+    color:var(--ink);
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary .plus{
+    font-family:'Inter', sans-serif;
+    font-size:22px;
+    color:var(--rust);
+    flex:none;
+    transition:transform 0.2s ease;
+  }
+  details[open] summary .plus{ transform:rotate(45deg); }
+  .doc-body{ padding:0 4px 30px; max-width:var(--measure); }
+  .doc-body h4{
+    font-family:'Inter', sans-serif; font-size:12.5px; font-weight:600;
+    letter-spacing:0.03em; color:var(--rust); margin:20px 0 8px;
+  }
+  .doc-body h4:first-child{ margin-top:0; }
+  .doc-body p, .doc-body li{ color:var(--ink-soft); font-size:14.5px; margin:0 0 8px; }
+  .doc-body ul{ margin:0; padding-left:18px; }
+
+  footer{ padding:8vw 6vw 6vw; background:var(--deep); color:var(--paper); }
+  footer h2{
+    font-family:'Fraunces', serif; font-weight:500;
+    font-size:clamp(1.8rem,4vw,2.8rem); max-width:14ch; margin:0 0 24px;
+  }
+  footer p{ font-family:'Inter', sans-serif; max-width:50ch; color:#C8C4B6; margin:0 0 34px; }
+  .contact-block{ font-family:'Inter', sans-serif; font-size:15px; display:flex; flex-direction:column; gap:10px; }
+  .contact-block a{ color:#E8D9C9; text-decoration:none; border-bottom:1px solid rgba(232,217,201,0.4);}
+  .contact-block a:hover{ color:#fff; border-color:#fff;}
+  .foot-note{ margin-top:50px; font-family:'Inter', sans-serif; font-size:12px; color:#7C8790; }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-name">Lauretta Ogbebor</div>
+  <nav class="masthead-nav">
+    <a href="#work">Work</a>
+    <a href="#skills">Skills</a>
+    <a href="https://www.linkedin.com/in/laurettaogbebor" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://github.com/LaurettaOgbebor" target="_blank" rel="noopener">GitHub</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Numbers rarely tell you the real story, that's where I come in.</h1>
+  <p class="sub">Mass Communication graduate, now building a career in data analytics. I clean the data, write the queries, build the model, and tell you what it actually means, not just what it says.</p>
+  <div class="ticker">
+    <span>5 projects documented</span>
+    <span>Excel, SQL and Power BI</span>
+    <span>Data analytics intern at DecodeLabs</span>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <h2>A bit about the road here</h2>
+  <p>Before data, I was telling stories on air. I graduated <strong>First Class in Mass Communication</strong> from Benson Idahosa University, with broadcast internships at AIT and KU FM.</p>
+  <p>Somewhere along the way, the part I liked most stopped being the story on the page and became the numbers underneath it, why one report told a different truth than another, what a dataset was actually saying once you sat with it. That's what pulled me toward analytics.</p>
+  <p>I'm now applying that through a data analytics internship at <strong>DecodeLabs</strong>. What follows are five projects from that path.</p>
+</section>
+
+<div id="work">
+
+<article class="dispatch">
+  <div class="dispatch-head">
+    <span class="dispatch-num">01</span>
+    <span class="dispatch-tool">EXCEL</span>
+  </div>
+  <h3>Building my first sales dashboard from scratch</h3>
+  <div class="dispatch-grid">
+    <div class="dispatch-narrative">
+      <p><strong>Peter led all six sales reps with over 434 million in revenue, Laptop A13 outperformed every other product at over 105 million in profit</strong>, and monthly customer counts held steady between 500 and 536 before a sharp drop that's worth flagging to whoever owns that number.</p>
+      <p>This was the very first data project I built end to end: a regional sales dataset covering products, sales reps, cities, and customer types, with nothing pre summarized for me.</p>
+      <p>I added calculated columns directly inside an Excel table for <strong>Revenue</strong> (Unit Price times Quantity), <strong>COGS</strong> (Cost Price times Quantity), and <strong>Profit</strong> (Revenue minus COGS), with Cost Price worked out as eighty percent of Unit Price across the dataset. From there I built pivot tables using aggregate functions like SUM and COUNTA to summarize revenue by sales rep, profit by product, COGS by city, and customer counts by month.</p>
+      <p>Each pivot table got its own chart, bar charts for revenue and profit, a donut chart for COGS by city, a line chart for monthly customers, and everything came together into a single dashboard with KPI cards and slicers for region and product category.</p>
+    </div>
+    <div class="figures">
+      <figure>
+        <img src="images/ex1_dataset.jpg" alt="Raw sales dataset in Excel with columns for date, region, city, customer type, channel, product, unit price, quantity, sales rep, cost price, revenue, COGS and profit">
+        <figcaption><span>Fig. 01</span><span class="tag">raw dataset</span></figcaption>
+      </figure>
+      <figure>
+        <img src="images/ex1_pivot.jpg" alt="Pivot tables and charts summarizing profit by product, revenue by sales rep, COGS by city, and customer counts by month">
+        <figcaption><span>Fig. 02</span><span class="tag">pivot tables + charts</span></figcaption>
+      </figure>
+      <figure>
+        <img src="images/ex1_dashboard.jpg" alt="Finished sales dashboard with KPI cards for revenue, COGS, profit and customers, slicers, and charts for top sales reps, COGS by city and most profitable products">
+        <figcaption><span>Fig. 03</span><span class="tag">finished dashboard</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</article>
+
+<article class="dispatch alt">
+  <div class="dispatch-head">
+    <span class="dispatch-num">02</span>
+    <span class="dispatch-tool">EXCEL AT DECODELABS</span>
+  </div>
+  <h3>Cleaning and analysing an ecommerce sales dataset</h3>
+  <div class="dispatch-grid">
+    <div class="dispatch-narrative">
+      <p><strong>Resolved 309 missing coupon records without deleting a single row, confirmed all 1,200 orders were unique, and surfaced a revenue decline from 552K in 2023 to 231K in 2025</strong> that any stakeholder would want flagged before the next planning cycle.</p>
+      <p>This ecommerce dataset came in with 1,200 rows and the kind of mess you actually find in the wild: missing coupon codes, inconsistent date formats, prices with currency symbols baked into the cell.</p>
+      <p>I filled the blank coupon entries with "No Coupon" instead of deleting anything, reformatted every date to ISO standard, and checked all order IDs for duplicates. From there I built a dashboard tracking total and average revenue, customer count, order status, and revenue by product, with slicers for referral source and coupon use.</p>
+      <p>Most of this happened on Excel Web after my laptop wouldn't cooperate with the desktop install, which meant no downloadable workbook and some dashboard values had to be pasted in as static figures instead of live formulas. Not the setup I planned for, but it taught me to work around constraints instead of waiting for the ideal one.</p>
+    </div>
+    <div class="figures">
+      <figure>
+        <img src="images/excel_raw.jpg" alt="Raw ecommerce order data in Excel with columns for product, quantity, price, shipping, payment method and referral source">
+        <figcaption><span>Fig. 04</span><span class="tag">raw dataset</span></figcaption>
+      </figure>
+      <figure>
+        <img src="images/excel_clean.jpg" alt="Data cleaning log documenting fixes to coupon codes, date formatting, and duplicate checks">
+        <figcaption><span>Fig. 05</span><span class="tag">cleaning log</span></figcaption>
+      </figure>
+      <figure>
+        <img src="images/excel_dashboard.jpg" alt="Excel dashboard showing ecommerce KPIs including revenue by product, order status breakdown and yearly revenue trend">
+        <figcaption><span>Fig. 06</span><span class="tag">finished dashboard</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</article>
+
+<article class="dispatch">
+  <div class="dispatch-head">
+    <span class="dispatch-num">03</span>
+    <span class="dispatch-tool">SQL FUNDAMENTALS</span>
+  </div>
+  <h3>Practicing the fundamentals on a student records table</h3>
+  <div class="dispatch-grid">
+    <div class="dispatch-narrative">
+      <p><strong>Went from a blank database to a fully working student records table</strong>, with a self incrementing primary key, a working email column, one record removed cleanly, and a check constraint in place so no invalid age can be entered again.</p>
+      <p>A separate, smaller project built to lock in the basics: creating a table from scratch, inserting records, adding a primary key that increases automatically, renaming a column, updating individual rows, deleting a record, and adding a check constraint so no one under 18 could be added.</p>
+      <p>It's a different dataset and a different exercise from the DecodeLabs work below, more of a foundations drill than a business analysis, but it's where a lot of the SQL habits used in that project were first practiced.</p>
+    </div>
+    <div class="figures">
+      <div class="figure-pair">
+        <figure>
+          <img src="images/sql_practice1.jpg" alt="SQL practice work building a student records table with inserts and column changes">
+          <figcaption><span>Fig. 07</span><span class="tag">table setup</span></figcaption>
+        </figure>
+        <figure>
+          <img src="images/sql_practice2.jpg" alt="SQL practice continued, updating records and adding a check constraint">
+          <figcaption><span>Fig. 08</span><span class="tag">updates + constraint</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</article>
+
+<article class="dispatch alt">
+  <div class="dispatch-head">
+    <span class="dispatch-num">04</span>
+    <span class="dispatch-tool">SQL AT DECODELABS</span>
+  </div>
+  <h3>Querying a live business database at DecodeLabs</h3>
+  <div class="dispatch-grid">
+    <div class="dispatch-narrative">
+      <p><strong>Flagged every product crossing the 100k revenue mark, identified customers ordering exactly twice for retention follow up, and rebuilt a fully broken price column into usable decimal data.</strong></p>
+      <p>At DecodeLabs, I write SQL against a 1,200 row order database to answer questions a business would actually ask: which customers use coupons, which orders were paid online, which products cross a 100k revenue mark, which customers have ordered exactly twice.</p>
+      <p>Along the way I've altered table structures, converted column types, cleaned messy price fields with <span class="codebit">REPLACE</span> and <span class="codebit">TRIM</span>, and grouped data to find things like average revenue per order status and total revenue by referral source.</p>
+    </div>
+    <div class="figures">
+      <figure>
+        <img src="images/sql_1.jpg" alt="SQL Server Management Studio showing queries and results against the DecodesLabSQL database">
+        <figcaption><span>Fig. 09</span><span class="tag">order queries</span></figcaption>
+      </figure>
+      <div class="figure-pair">
+        <figure>
+          <img src="images/sql_2.jpg" alt="SQL queries cleaning price fields and aggregating revenue by product and order status">
+          <figcaption><span>Fig. 10</span><span class="tag">cleaning + aggregation</span></figcaption>
+        </figure>
+        <figure>
+          <img src="images/sql_3.jpg" alt="SQL query results showing customers with coupons and their order status">
+          <figcaption><span>Fig. 11</span><span class="tag">coupon query</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</article>
+
+<article class="dispatch">
+  <div class="dispatch-head">
+    <span class="dispatch-num">05</span>
+    <span class="dispatch-tool">POWER BI</span>
+  </div>
+  <h3>Turning raw tables into a working dashboard</h3>
+  <div class="dispatch-grid">
+    <div class="dispatch-narrative">
+      <p><strong>Identified Apple as the top profit brand at 197K and white as the leading colour at 39% of sales</strong>, then turned both findings into two direct recommendations rather than leaving them as charts on a screen.</p>
+      <p>Using <strong>Power BI</strong>, I imported three related tables, Products, Sales and Customers, cleaned them in Power Query using Keep Rows to strip out a block of null data starting at row 250, then connected them through shared keys to build a proper data model instead of working off one flat table.</p>
+      <p>The result, <strong>RealTech Sales Analysis</strong>, tracks revenue, cost of goods sold and profit across 250 customers, broken down by brand, colour, region, gender and income level. Medium income customers only lead on total profit because there are more of them, not because each one is worth more, a distinction that matters before anyone builds a strategy on it.</p>
+      <p>I closed it the way I'd want any report to close: with insights the dashboard doesn't say out loud, and recommendations that follow from them, give Lenovo and Samsung a push since they're close enough to Apple to compete, give Dell and Asus more visibility rather than cutting prices, and stock and market around white and grey since together they drive over 72% of sales.</p>
+    </div>
+    <div class="figures">
+      <div class="figure-pair">
+        <figure>
+          <img src="images/pbi_clean1.jpg" alt="Power Query Keep Top Rows dialog used to remove null data from the imported table">
+          <figcaption><span>Fig. 12</span><span class="tag">Power Query</span></figcaption>
+        </figure>
+        <figure>
+          <img src="images/pbi_clean2.jpg" alt="Cleaned product table in Power Query after removing null rows">
+          <figcaption><span>Fig. 13</span><span class="tag">cleaned table</span></figcaption>
+        </figure>
+      </div>
+      <figure>
+        <img src="images/pbi_model.jpg" alt="Power BI data model connecting Products, Sales and Customers tables through shared keys">
+        <figcaption><span>Fig. 14</span><span class="tag">data model</span></figcaption>
+      </figure>
+      <figure>
+        <img src="images/pbi_dashboard.jpg" alt="RealTech Sales Analysis Power BI dashboard showing revenue, profit, most profitable product and income level by profit">
+        <figcaption><span>Fig. 15</span><span class="tag">dashboard</span></figcaption>
+      </figure>
+      <div class="figure-pair">
+        <figure>
+          <img src="images/pbi_insights.jpg" alt="Insights panel summarizing key findings from the dashboard">
+          <figcaption><span>Fig. 16</span><span class="tag">insights</span></figcaption>
+        </figure>
+        <figure>
+          <img src="images/pbi_recs.jpg" alt="Recommendations panel with actionable suggestions based on the analysis">
+          <figcaption><span>Fig. 17</span><span class="tag">recommendations</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</article>
+
+</div>
+
+<section class="skills" id="skills">
+  <h2>What I work with</h2>
+  <div class="skill-rows">
+    <div class="skill-row">
+      <div class="skill-cat">Excel</div>
+      <div class="skill-list">Pivot tables, dashboards, slicers, KPI tracking, data cleaning</div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-cat">SQL</div>
+      <div class="skill-list">Joins, aggregation, filtering, table design (DDL), data manipulation (DML)</div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-cat">Power BI</div>
+      <div class="skill-list">Power Query, data modeling, relational tables, dashboard design</div>
+    </div>
+  </div>
+</section>
+
+<section class="services">
+  <h2>What I can help with</h2>
+  <p class="lead">If you have data sitting in a spreadsheet or a database and no clear picture of what it's telling you, this is where I come in.</p>
+  <div class="service-rows">
+    <div class="service-row">
+      <div class="service-name">Data cleaning</div>
+      <div class="service-desc">Turning messy, inconsistent spreadsheets into something you can actually trust and build on.</div>
+    </div>
+    <div class="service-row">
+      <div class="service-name">Data modeling</div>
+      <div class="service-desc">Connecting related tables properly instead of cramming everything into one flat sheet.</div>
+    </div>
+    <div class="service-row">
+      <div class="service-name">Database development</div>
+      <div class="service-desc">Setting up tables, keys, and constraints so your data has a solid structure to sit on, not just a spreadsheet with extra steps.</div>
+    </div>
+    <div class="service-row">
+      <div class="service-name">Data visualization</div>
+      <div class="service-desc">Dashboards in Excel or Power BI that people actually open and understand at a glance.</div>
+    </div>
+    <div class="service-row">
+      <div class="service-name">SQL queries and reporting</div>
+      <div class="service-desc">Answering specific business questions directly from your database, no guesswork.</div>
+    </div>
+    <div class="service-row">
+      <div class="service-name">Insights and recommendations</div>
+      <div class="service-desc">Not just charts, but what they mean and what to do next.</div>
+    </div>
+  </div>
+  <p class="services-note">If what you need isn't listed here, tell me about it and we'll figure it out together.</p>
+</section>
+
+<section class="documentation">
+  <h2>Project documentation</h2>
+  <p class="lead">A closer look at how each project actually came together, beyond the screenshots.</p>
+
+  <details>
+    <summary><span>01. Excel, first sales dashboard</span><span class="plus">+</span></summary>
+    <div class="doc-body">
+      <h4>Objective</h4>
+      <p>Build a full sales analysis end to end in Excel, from raw transactional data to a finished dashboard.</p>
+      <h4>Process</h4>
+      <ul>
+        <li>Added calculated columns for Revenue (Unit Price times Quantity), COGS (Cost Price times Quantity), and Profit (Revenue minus COGS) directly inside an Excel table.</li>
+        <li>Worked out Cost Price as eighty percent of Unit Price across the dataset.</li>
+        <li>Used pivot tables with SUM and COUNTA to aggregate revenue by sales rep, profit by product, COGS by city, and customer counts by month.</li>
+        <li>Built a chart for each pivot table: bar charts for revenue and profit, a donut chart for COGS by city, a line chart for monthly customers.</li>
+        <li>Assembled everything into a single dashboard with KPI cards and slicers for region and product category.</li>
+      </ul>
+      <h4>Tools</h4>
+      <p>Excel (calculated tables, pivot tables, PivotCharts)</p>
+      <h4>Key insights</h4>
+      <p>Peter brought in the highest revenue among sales reps at over 434 million, Laptop A13 was the most profitable product at over 105 million, and customer numbers held steady between about 500 and 536 a month before dropping sharply in the final month of data.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span>02. Excel at DecodeLabs, ecommerce sales analysis</span><span class="plus">+</span></summary>
+    <div class="doc-body">
+      <h4>Objective</h4>
+      <p>Clean a raw ecommerce order dataset and turn it into a dashboard someone could actually make decisions from.</p>
+      <h4>Process</h4>
+      <ul>
+        <li>Audited the dataset for missing values, found 309 blank coupon code entries and filled them with "No Coupon" rather than deleting rows.</li>
+        <li>Reformatted every date column to ISO standard so sorting and filtering worked correctly.</li>
+        <li>Verified all 1,200 order IDs were unique and checked the full dataset for duplicate rows, found none.</li>
+        <li>Built pivot tables summarizing revenue by product, order status, and referral source.</li>
+        <li>Assembled a dashboard with KPIs for average revenue, total revenue, total customers, and median revenue, plus slicers for referral source and coupon use.</li>
+      </ul>
+      <h4>Tools</h4>
+      <p>Excel (Web version)</p>
+      <h4>Key insights</h4>
+      <p>Chairs generated the highest product revenue at over 195K while phones generated the least. Yearly revenue fell from about 552K in 2023 to 231K in 2025. Cancelled orders were the most common order status.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span>03. SQL fundamentals</span><span class="plus">+</span></summary>
+    <div class="doc-body">
+      <h4>Objective</h4>
+      <p>Build confidence with core SQL commands on a smaller, lower stakes dataset before applying them to real business data.</p>
+      <h4>Process</h4>
+      <ul>
+        <li>Created a student records table from scratch with age, name, and location columns.</li>
+        <li>Inserted multiple records, then added a primary key column and an email column.</li>
+        <li>Renamed a column, updated individual records, deleted a record, and added a check constraint restricting age to 18 and above.</li>
+      </ul>
+      <h4>Tools</h4>
+      <p>SQL Server Management Studio</p>
+      <h4>Key insights</h4>
+      <p>This project was less about findings and more about muscle memory, it's where table design, updates, and constraints stopped being theory and started being habit.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span>04. SQL at DecodeLabs</span><span class="plus">+</span></summary>
+    <div class="doc-body">
+      <h4>Objective</h4>
+      <p>Answer real business questions from a 1,200 row order database using SQL alone.</p>
+      <h4>Process</h4>
+      <ul>
+        <li>Selected and filtered records by customer, product, order status, and coupon usage.</li>
+        <li>Cleaned the unitprice column, stripping currency symbols and commas with REPLACE and TRIM, then converted it to a proper decimal type.</li>
+        <li>Grouped and aggregated data to find total revenue by product and referral source, average revenue by order status, and which products crossed 100k in revenue.</li>
+        <li>Identified customers with exactly two orders and confirmed there were no duplicate rows in the dataset.</li>
+      </ul>
+      <h4>Tools</h4>
+      <p>SQL Server Management Studio</p>
+      <h4>Key insights</h4>
+      <p>Certain referral sources and products consistently outperform others on revenue, and coupon usage patterns differ enough by customer that they're worth tracking separately from regular orders.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span>05. Power BI, RealTech Sales Analysis</span><span class="plus">+</span></summary>
+    <div class="doc-body">
+      <h4>Objective</h4>
+      <p>Move from a flat spreadsheet mindset to a proper relational data model, then turn it into a dashboard someone could make decisions from.</p>
+      <h4>Process</h4>
+      <ul>
+        <li>Imported three related tables: Products, Sales, and Customers.</li>
+        <li>Cleaned the Products table in Power Query using Keep Rows to remove a block of null data starting at row 250.</li>
+        <li>Built a data model connecting all three tables through shared keys instead of merging everything into one table.</li>
+        <li>Designed a dashboard tracking revenue, cost of goods sold, and profit, broken down by brand, colour, region, gender, and income level.</li>
+        <li>Wrote a short insights page and a recommendations page to close the analysis with clear next steps.</li>
+      </ul>
+      <h4>Tools</h4>
+      <p>Power BI, Power Query</p>
+      <h4>Key insights</h4>
+      <p>Apple led on profitability at 197K, white was the most sold colour by a wide margin, and medium income customers only led on total profit because there were more of them, not because each one was more valuable.</p>
+    </div>
+  </details>
+</section>
+
+<footer id="contact">
+  <h2>Let's talk about your data</h2>
+  <p>I'm looking for data analytics opportunities, freelance or full time, where I can clean data, build models, and turn numbers into decisions your team can act on. Not just dashboards.</p>
+  <div class="contact-block">
+    <a href="mailto:ogbeborlauretta@gmail.com">ogbeborlauretta@gmail.com</a>
+    <a href="tel:+2348129768760">0812 976 8760</a>
+    <a href="https://www.linkedin.com/in/laurettaogbebor" target="_blank" rel="noopener">linkedin.com/in/laurettaogbebor</a>
+    <a href="https://github.com/LaurettaOgbebor" target="_blank" rel="noopener">github.com/LaurettaOgbebor</a>
+  </div>
+  <div class="foot-note">Lagos, Nigeria</div>
+</footer>
+
+<div class="lightbox-overlay" id="lightbox">
+  <img id="lightbox-img" src="" alt="Enlarged figure">
+</div>
+<button class="lightbox-close" id="lightbox-close-btn" onclick="closeLightbox()">Close ✕</button>
+<button class="lightbox-nav lightbox-prev" id="lightbox-prev-btn" onclick="event.stopPropagation(); showPrev();">‹</button>
+<button class="lightbox-nav lightbox-next" id="lightbox-next-btn" onclick="event.stopPropagation(); showNext();">›</button>
+<div class="lightbox-counter" id="lightbox-counter"></div>
+
+<script>
+  var galleryImgs = [];
+  var currentIndex = 0;
+
+  function updateLightboxImage(){
+    document.getElementById('lightbox-img').src = galleryImgs[currentIndex].src;
+    document.getElementById('lightbox-counter').textContent = (currentIndex + 1) + ' / ' + galleryImgs.length;
+  }
+  function openLightbox(index){
+    currentIndex = index;
+    updateLightboxImage();
+    document.getElementById('lightbox').classList.add('open');
+    document.getElementById('lightbox-close-btn').classList.add('open');
+    document.getElementById('lightbox-prev-btn').classList.add('open');
+    document.getElementById('lightbox-next-btn').classList.add('open');
+    document.getElementById('lightbox-counter').classList.add('open');
+  }
+  function closeLightbox(){
+    document.getElementById('lightbox').classList.remove('open');
+    document.getElementById('lightbox-close-btn').classList.remove('open');
+    document.getElementById('lightbox-prev-btn').classList.remove('open');
+    document.getElementById('lightbox-next-btn').classList.remove('open');
+    document.getElementById('lightbox-counter').classList.remove('open');
+  }
+  function showNext(){
+    currentIndex = (currentIndex + 1) % galleryImgs.length;
+    updateLightboxImage();
+  }
+  function showPrev(){
+    currentIndex = (currentIndex - 1 + galleryImgs.length) % galleryImgs.length;
+    updateLightboxImage();
+  }
+
+  document.addEventListener('keydown', function(e){
+    if(!document.getElementById('lightbox').classList.contains('open')) return;
+    if(e.key === 'Escape'){ closeLightbox(); }
+    if(e.key === 'ArrowRight'){ showNext(); }
+    if(e.key === 'ArrowLeft'){ showPrev(); }
+  });
+
+  document.getElementById('lightbox').addEventListener('click', function(e){
+    if(e.target.id === 'lightbox'){ closeLightbox(); }
+  });
+
+  galleryImgs = Array.prototype.slice.call(document.querySelectorAll('figure img'));
+  galleryImgs.forEach(function(img, idx){
+    img.addEventListener('click', function(){ openLightbox(idx); });
+  });
+
+  // swipe support
+  var touchStartX = 0;
+  var lightboxEl = document.getElementById('lightbox');
+  lightboxEl.addEventListener('touchstart', function(e){
+    touchStartX = e.changedTouches[0].screenX;
+  }, {passive:true});
+  lightboxEl.addEventListener('touchend', function(e){
+    var touchEndX = e.changedTouches[0].screenX;
+    var diff = touchEndX - touchStartX;
+    if(Math.abs(diff) > 40){
+      if(diff < 0){ showNext(); } else { showPrev(); }
+    }
+  }, {passive:true});
+</script>
+
+</body>
+</html>
